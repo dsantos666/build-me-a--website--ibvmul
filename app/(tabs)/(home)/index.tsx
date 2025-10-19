@@ -1,11 +1,36 @@
 
 import React from 'react';
 import { Stack } from 'expo-router';
-import { ScrollView, StyleSheet, View, Text, Pressable, Platform, Image } from 'react-native';
+import { ScrollView, StyleSheet, View, Text, Pressable, Platform } from 'react-native';
 import { IconSymbol } from '@/components/IconSymbol';
 import { useTheme } from '@react-navigation/native';
 import { colors, commonStyles } from '@/styles/commonStyles';
+import FangCard, { FangItem } from '@/components/FangCard';
 import { useRouter } from 'expo-router';
+
+const featuredFangs: FangItem[] = [
+  {
+    id: '1',
+    name: 'Nightmare Fangs',
+    price: '$149.99',
+    imageUrl: 'https://images.unsplash.com/photo-1509248961158-e54f6934749c?w=800',
+    description: 'Classic vampire fangs with a terrifying edge. Perfect for Halloween or cosplay.',
+  },
+  {
+    id: '2',
+    name: 'Blood Moon Fangs',
+    price: '$179.99',
+    imageUrl: 'https://images.unsplash.com/photo-1570993492903-ba4c3088f100?w=800',
+    description: 'Premium custom-fitted fangs with a crimson tint. Made with medical-grade materials.',
+  },
+  {
+    id: '3',
+    name: 'Shadow Fangs',
+    price: '$129.99',
+    imageUrl: 'https://images.unsplash.com/photo-1576086213369-97a306d36557?w=800',
+    description: 'Sleek and subtle fangs for everyday wear. Comfortable and realistic.',
+  },
+];
 
 export default function HomeScreen() {
   const theme = useTheme();
@@ -51,119 +76,56 @@ export default function HomeScreen() {
           <View style={styles.hero}>
             <Text style={styles.heroTitle}>NIGHTMARE FANGS</Text>
             <Text style={styles.heroSubtitle}>Custom Fang Caps & Dental Art</Text>
+            <Text style={styles.heroDescription}>
+              Transform your smile with our premium custom-fitted fang caps. 
+              Handcrafted with medical-grade materials for comfort and style.
+            </Text>
           </View>
 
-          {/* Featured Single Set of Fangs */}
-          <View style={styles.featuredCard}>
-            <View style={styles.imageContainer}>
-              <Image 
-                source={require('@/assets/images/3da0d428-4ec9-44fa-8d92-ddf541750e7b.jpeg')}
-                style={styles.fangImage}
-                resizeMode="cover"
-              />
-            </View>
-            
-            <View style={styles.productInfo}>
-              <Text style={styles.productName}>Single Set of Fangs</Text>
-              <Text style={styles.productPrice}>$149.99</Text>
-              <Text style={styles.productDescription}>
-                Premium custom-fitted vampire fangs crafted with medical-grade materials. 
-                These classic fangs provide a comfortable fit and realistic appearance, 
-                perfect for cosplay, Halloween, or everyday wear.
-              </Text>
-
-              <View style={styles.features}>
-                <View style={styles.featureItem}>
-                  <IconSymbol name="checkmark.circle.fill" color={colors.primary} size={20} />
-                  <Text style={styles.featureText}>Custom-fitted for comfort</Text>
-                </View>
-                <View style={styles.featureItem}>
-                  <IconSymbol name="checkmark.circle.fill" color={colors.primary} size={20} />
-                  <Text style={styles.featureText}>Medical-grade materials</Text>
-                </View>
-                <View style={styles.featureItem}>
-                  <IconSymbol name="checkmark.circle.fill" color={colors.primary} size={20} />
-                  <Text style={styles.featureText}>Professional installation</Text>
-                </View>
-                <View style={styles.featureItem}>
-                  <IconSymbol name="checkmark.circle.fill" color={colors.primary} size={20} />
-                  <Text style={styles.featureText}>Lifetime warranty</Text>
-                </View>
-              </View>
-            </View>
-          </View>
-
-          {/* Call to Action Buttons */}
           <View style={styles.ctaContainer}>
             <Pressable 
               style={styles.ctaButton}
               onPress={() => router.push('/(tabs)/appointment')}
             >
-              <IconSymbol name="calendar" color={colors.text} size={20} />
               <Text style={styles.ctaButtonText}>Book Appointment</Text>
             </Pressable>
             <Pressable 
               style={styles.ctaButtonSecondary}
               onPress={() => router.push('/(tabs)/gallery')}
             >
-              <IconSymbol name="photo.stack" color={colors.primary} size={20} />
               <Text style={styles.ctaButtonSecondaryText}>View Gallery</Text>
             </Pressable>
           </View>
 
-          {/* Additional Info Section */}
-          <View style={styles.infoSection}>
-            <Text style={styles.infoTitle}>How It Works</Text>
-            
-            <View style={styles.stepCard}>
-              <View style={styles.stepNumber}>
-                <Text style={styles.stepNumberText}>1</Text>
-              </View>
-              <View style={styles.stepContent}>
-                <Text style={styles.stepTitle}>Book Appointment</Text>
-                <Text style={styles.stepDescription}>
-                  Schedule a consultation to discuss your design preferences
-                </Text>
-              </View>
-            </View>
-
-            <View style={styles.stepCard}>
-              <View style={styles.stepNumber}>
-                <Text style={styles.stepNumberText}>2</Text>
-              </View>
-              <View style={styles.stepContent}>
-                <Text style={styles.stepTitle}>Custom Fitting</Text>
-                <Text style={styles.stepDescription}>
-                  We take precise measurements for a perfect fit
-                </Text>
-              </View>
-            </View>
-
-            <View style={styles.stepCard}>
-              <View style={styles.stepNumber}>
-                <Text style={styles.stepNumberText}>3</Text>
-              </View>
-              <View style={styles.stepContent}>
-                <Text style={styles.stepTitle}>Professional Installation</Text>
-                <Text style={styles.stepDescription}>
-                  Expert installation ensures comfort and durability
-                </Text>
-              </View>
-            </View>
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Featured Designs</Text>
+            {featuredFangs.map((fang) => (
+              <FangCard 
+                key={fang.id} 
+                fang={fang}
+                onPress={() => console.log('Fang pressed:', fang.name)}
+              />
+            ))}
           </View>
 
-          {/* Contact Section */}
-          <View style={styles.contactSection}>
-            <Text style={styles.contactTitle}>Have Questions?</Text>
-            <Text style={styles.contactText}>
-              Check out our FAQ section or book an appointment to speak with our specialists.
-            </Text>
-            <Pressable 
-              style={styles.faqButton}
-              onPress={() => router.push('/(tabs)/faq')}
-            >
-              <Text style={styles.faqButtonText}>View FAQ</Text>
-            </Pressable>
+          <View style={styles.infoSection}>
+            <Text style={styles.infoTitle}>Why Choose Nightmare Fangs?</Text>
+            <View style={styles.infoItem}>
+              <IconSymbol name="checkmark.circle.fill" color={colors.primary} size={24} />
+              <Text style={styles.infoText}>Custom-fitted for perfect comfort</Text>
+            </View>
+            <View style={styles.infoItem}>
+              <IconSymbol name="checkmark.circle.fill" color={colors.primary} size={24} />
+              <Text style={styles.infoText}>Medical-grade materials</Text>
+            </View>
+            <View style={styles.infoItem}>
+              <IconSymbol name="checkmark.circle.fill" color={colors.primary} size={24} />
+              <Text style={styles.infoText}>Professional installation</Text>
+            </View>
+            <View style={styles.infoItem}>
+              <IconSymbol name="checkmark.circle.fill" color={colors.primary} size={24} />
+              <Text style={styles.infoText}>Lifetime warranty</Text>
+            </View>
           </View>
         </ScrollView>
       </View>
@@ -181,7 +143,7 @@ const styles = StyleSheet.create({
   },
   hero: {
     alignItems: 'center',
-    marginBottom: 24,
+    marginBottom: 32,
     paddingVertical: 20,
   },
   heroTitle: {
@@ -197,172 +159,79 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: colors.accent,
     textAlign: 'center',
-  },
-  featuredCard: {
-    backgroundColor: colors.card,
-    borderRadius: 16,
-    overflow: 'hidden',
-    marginBottom: 24,
-    boxShadow: '0px 8px 24px rgba(255, 65, 54, 0.3)',
-    elevation: 8,
-  },
-  imageContainer: {
-    width: '100%',
-    height: 300,
-    backgroundColor: colors.background,
-  },
-  fangImage: {
-    width: '100%',
-    height: '100%',
-  },
-  productInfo: {
-    padding: 20,
-  },
-  productName: {
-    fontSize: 28,
-    fontWeight: '800',
-    color: colors.text,
-    marginBottom: 8,
-  },
-  productPrice: {
-    fontSize: 32,
-    fontWeight: '900',
-    color: colors.primary,
     marginBottom: 16,
   },
-  productDescription: {
+  heroDescription: {
     fontSize: 16,
     color: colors.textSecondary,
+    textAlign: 'center',
     lineHeight: 24,
-    marginBottom: 20,
-  },
-  features: {
-    gap: 12,
-  },
-  featureItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-  },
-  featureText: {
-    fontSize: 15,
-    color: colors.text,
-    flex: 1,
+    paddingHorizontal: 20,
   },
   ctaContainer: {
+    flexDirection: 'row',
     gap: 12,
     marginBottom: 32,
   },
   ctaButton: {
+    flex: 1,
     backgroundColor: colors.primary,
     paddingVertical: 16,
-    borderRadius: 12,
+    borderRadius: 8,
     alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    gap: 8,
-    boxShadow: '0px 4px 12px rgba(255, 65, 54, 0.4)',
-    elevation: 4,
   },
   ctaButtonText: {
     color: colors.text,
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '700',
   },
   ctaButtonSecondary: {
+    flex: 1,
     backgroundColor: colors.card,
     paddingVertical: 16,
-    borderRadius: 12,
+    borderRadius: 8,
     alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    gap: 8,
     borderWidth: 2,
     borderColor: colors.primary,
   },
   ctaButtonSecondaryText: {
     color: colors.primary,
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '700',
+  },
+  section: {
+    marginBottom: 32,
+  },
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: '800',
+    color: colors.text,
+    marginBottom: 16,
   },
   headerButtonContainer: {
     padding: 6,
   },
   infoSection: {
-    marginBottom: 32,
-  },
-  infoTitle: {
-    fontSize: 24,
-    fontWeight: '800',
-    color: colors.text,
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  stepCard: {
-    backgroundColor: colors.card,
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 12,
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    gap: 16,
-  },
-  stepNumber: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: colors.primary,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  stepNumberText: {
-    fontSize: 20,
-    fontWeight: '800',
-    color: colors.text,
-  },
-  stepContent: {
-    flex: 1,
-  },
-  stepTitle: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: colors.text,
-    marginBottom: 4,
-  },
-  stepDescription: {
-    fontSize: 14,
-    color: colors.textSecondary,
-    lineHeight: 20,
-  },
-  contactSection: {
     backgroundColor: colors.card,
     borderRadius: 12,
     padding: 20,
-    alignItems: 'center',
     marginBottom: 20,
   },
-  contactTitle: {
-    fontSize: 22,
+  infoTitle: {
+    fontSize: 20,
     fontWeight: '700',
     color: colors.text,
-    marginBottom: 12,
-  },
-  contactText: {
-    fontSize: 16,
-    color: colors.textSecondary,
-    textAlign: 'center',
-    lineHeight: 24,
     marginBottom: 16,
   },
-  faqButton: {
-    backgroundColor: colors.primary,
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-    borderRadius: 8,
+  infoItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+    gap: 12,
   },
-  faqButtonText: {
-    color: colors.text,
+  infoText: {
     fontSize: 16,
-    fontWeight: '700',
+    color: colors.text,
+    flex: 1,
   },
 });
