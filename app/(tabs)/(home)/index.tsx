@@ -53,26 +53,30 @@ export default function HomeScreen() {
             <Text style={styles.heroSubtitle}>Custom Fang Caps & Dental Art</Text>
           </View>
 
-          {/* Featured Single Set of Fangs */}
+          {/* Featured Double Set of Fangs */}
           <View style={styles.featuredCard}>
             <View style={styles.imageContainer}>
               <Image 
-                source={require('@/assets/images/3da0d428-4ec9-44fa-8d92-ddf541750e7b.jpeg')}
+                source={require('@/assets/images/b0068494-991b-45fa-9446-4cead555bb4e.jpeg')}
                 style={styles.fangImage}
                 resizeMode="cover"
               />
             </View>
             
             <View style={styles.productInfo}>
-              <Text style={styles.productName}>Single Set of Fangs</Text>
-              <Text style={styles.productPrice}>$149.99</Text>
+              <Text style={styles.productName}>Double Set of Fangs</Text>
+              <Text style={styles.productPrice}>$249.99</Text>
               <Text style={styles.productDescription}>
-                Premium custom-fitted vampire fangs crafted with medical-grade materials. 
-                These classic fangs provide a comfortable fit and realistic appearance, 
-                perfect for cosplay, Halloween, or everyday wear.
+                Premium custom-fitted double vampire fangs crafted with medical-grade materials. 
+                These enhanced fangs feature both upper and lower sets, providing a dramatic and 
+                realistic appearance perfect for serious cosplay, Halloween, or everyday wear.
               </Text>
 
               <View style={styles.features}>
+                <View style={styles.featureItem}>
+                  <IconSymbol name="checkmark.circle.fill" color={colors.primary} size={20} />
+                  <Text style={styles.featureText}>Double set - upper & lower fangs</Text>
+                </View>
                 <View style={styles.featureItem}>
                   <IconSymbol name="checkmark.circle.fill" color={colors.primary} size={20} />
                   <Text style={styles.featureText}>Custom-fitted for comfort</Text>
