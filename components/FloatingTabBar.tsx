@@ -35,53 +35,6 @@ interface FloatingTabBarProps {
   bottomMargin?: number;
 }
 
-interface TabItemProps {
-  tab: TabBarItem;
-  active: boolean;
-  onPress: () => void;
-}
-
-function TabItem({ tab, active, onPress }: TabItemProps) {
-  const scale = useSharedValue(active ? 1 : 0.9);
-
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{ scale: withSpring(scale.value) }],
-    };
-  });
-
-  React.useEffect(() => {
-    scale.value = active ? 1 : 0.9;
-  }, [active, scale]);
-
-  return (
-    <TouchableOpacity
-      style={styles.tab}
-      onPress={onPress}
-      activeOpacity={0.7}
-    >
-      <Animated.View style={[styles.tabContent, animatedStyle]}>
-        <IconSymbol
-          name={tab.icon as any}
-          size={24}
-          color={active ? colors.primary : colors.text}
-        />
-        <Text
-          style={[
-            styles.tabLabel,
-            {
-              color: active ? colors.primary : colors.text,
-              fontWeight: active ? '600' : '400',
-            },
-          ]}
-        >
-          {tab.label}
-        </Text>
-      </Animated.View>
-    </TouchableOpacity>
-  );
-}
-
 export default function FloatingTabBar({
   tabs,
   containerWidth = Dimensions.get('window').width - 32,
@@ -128,13 +81,40 @@ export default function FloatingTabBar({
       >
         {tabs.map((tab, index) => {
           const active = isActive(tab.route);
+          const scale = useSharedValue(active ? 1 : 0.9);
+
+          const animatedStyle = useAnimatedStyle(() => {
+            return {
+              transform: [{ scale: withSpring(scale.value) }],
+            };
+          });
+
           return (
-            <TabItem
+            <TouchableOpacity
               key={tab.name}
-              tab={tab}
-              active={active}
+              style={styles.tab}
               onPress={() => handleTabPress(tab.route)}
-            />
+              activeOpacity={0.7}
+            >
+              <Animated.View style={[styles.tabContent, animatedStyle]}>
+                <IconSymbol
+                  name={tab.icon as any}
+                  size={24}
+                  color={active ? colors.primary : colors.text}
+                />
+                <Text
+                  style={[
+                    styles.tabLabel,
+                    {
+                      color: active ? colors.primary : colors.text,
+                      fontWeight: active ? '600' : '400',
+                    },
+                  ]}
+                >
+                  {tab.label}
+                </Text>
+              </Animated.View>
+            </TouchableOpacity>
           );
         })}
       </BlurView>
