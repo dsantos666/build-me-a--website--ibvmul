@@ -1,13 +1,13 @@
 
 import React from 'react';
-import { View, Text, Image, StyleSheet, Pressable, ImageSourcePropType } from 'react-native';
+import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
 import { colors } from '@/styles/commonStyles';
 
 export interface FangItem {
   id: string;
   name: string;
   price: string;
-  imageUrl: string | ImageSourcePropType;
+  imageUrl: string;
   description: string;
 }
 
@@ -17,10 +17,6 @@ interface FangCardProps {
 }
 
 export default function FangCard({ fang, onPress }: FangCardProps) {
-  const imageSource = typeof fang.imageUrl === 'string' 
-    ? { uri: fang.imageUrl } 
-    : fang.imageUrl;
-
   return (
     <Pressable 
       style={({ pressed }) => [
@@ -30,7 +26,7 @@ export default function FangCard({ fang, onPress }: FangCardProps) {
       onPress={onPress}
     >
       <Image 
-        source={imageSource} 
+        source={{ uri: fang.imageUrl }} 
         style={styles.image}
         resizeMode="cover"
       />
